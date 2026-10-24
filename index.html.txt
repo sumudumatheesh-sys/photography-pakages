@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ============================================================
+       MR DIRECTOR — single-file portfolio website
+       HOW TO CUSTOMIZE (quick guide):
+       • IMAGES  → search for "IMG:" comments; all photos use Unsplash
+                   URLs you can replace with your own image links.
+       • PRICES  → search for "PRICE:" in the Pricing section below.
+       • CONTACT → search for "EDIT:" for phone, email, location,
+                   WhatsApp and social links.
+       ============================================================ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr Director — Professional Photographer | Weddings, Portraits, Events</title>
+  <meta name="description" content="Mr Director is a professional photographer with 2+ years of experience specializing in weddings, portraits, events, commercial and nature photography. View portfolio and pricing, and book a session.">
+  <meta name="keywords" content="photographer, wedding photography, portraits, event coverage, commercial photography, nature photography, Mr Director">
+  <meta property="og:title" content="Mr Director | Capturing moments that last forever">
+  <meta property="og:description" content="Professional photography — weddings, portraits, events, commercial and nature. Book your session today.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a1118">
+
+  <!-- Fonts: display serif for headings, clean sans for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS — colors, fonts, spacing, transitions
+   Accent gold: #d4a94e · Teal/blue dark gradients
+   ============================================================ */
+:root {
+  --bg: #0a1118;
+  --bg-2: #0e1a24;
+  --bg-3: #122530;
+  --card: rgba(255, 255, 255, 0.04);
+  --line: rgba(255, 255, 255, 0.09);
+  --text: #f4f6f7;
+  --muted: #9fb0ba;
+  --accent: #d4a94e;
+  --accent-soft: rgba(212, 169, 78, 0.14);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', 'Helvetica Neue', sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius: 10px;
+}
+
+/* ---------- Reset / base ---------- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+.container { width: min(1180px, 90%); margin: 0 auto; }
+::selection { background: var(--accent); color: #131007; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.95rem 2.3rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-size: 0.8rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.22em;
+  transition: all 0.35s var(--ease);
+}
+.btn--gold { background: var(--accent); color: #161005; }
+.btn--gold:hover { background: #e8c06a; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212,169,78,0.35); }
+.btn--ghost { border-color: rgba(244,246,247,0.35); color: var(--text); }
+.btn--ghost:hover { border-color: var(--text); background: rgba(244,246,247,0.07); transform: translateY(-2px); }
+
+/* ============================================================
+   STICKY NAVBAR
+   ============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  transition: background 0.4s var(--ease), box-shadow 0.4s;
+}
+.nav.scrolled {
+  background: rgba(10, 17, 24, 0.9);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--line);
+}
+.nav__inner {
+  width: min(1180px, 92%); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 0;
+}
+.nav__logo {
+  font-family: var(--serif); font-weight: 700; font-size: 1.2rem;
+  letter-spacing: 0.28em; color: var(--text);
+}
+.nav__logo:hover { color: var(--accent); }
+.nav__links { display: flex; gap: 2.1rem; }
+.nav__link {
+  font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--muted); padding: 0.3rem 0; position: relative;
+  transition: color 0.3s;
+}
+.nav__link::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 1px; background: var(--accent);
+  transition: width 0.35s var(--ease);
+}
+.nav__link:hover, .nav__link.active { color: var(--text); }
+.nav__link:hover::after, .nav__link.active::after { width: 100%; }
+
+/* Hamburger (mobile) */
+.nav__toggle { display: none; flex-direction: column; gap: 5px; background: none; border: 0; padding: 6px; }
+.nav__toggle span { width: 24px; height: 2px; background: var(--text); transition: transform 0.3s var(--ease), opacity 0.3s; }
+.nav__toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__toggle.open span:nth-child(2) { opacity: 0; }
+.nav__toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================================
+   HERO — slideshow background, name, tagline, CTA
+   ============================================================ */
+.hero {
+  position: relative; min-height: 100vh; min-height: 100svh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
+}
+.hero__slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity 1.8s ease;
+}
+.hero__slide.active { opacity: 1; animation: heroZoom 8s ease-out forwards; }
+@keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+
+.hero__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(10,17,24,0.72), rgba(14,26,36,0.45) 50%, rgba(10,17,24,0.85));
+}
+.hero__content { position: relative; z-index: 2; padding: 0 1.5rem; }
+.hero__eyebrow {
+  font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.45em;
+  color: var(--accent); margin-bottom: 1.3rem;
+}
+.hero__title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(2.8rem, 9vw, 6.4rem);
+  letter-spacing: 0.1em; text-indent: 0.1em; line-height: 1.08;
+  margin-bottom: 1.2rem;
+}
+.hero__tagline {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.05rem, 3vw, 1.5rem); color: var(--muted);
+  margin-bottom: 2.6rem;
+}
+
+/* Scroll hint line */
+.hero__hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2; }
+.hero__hint span {
+  display: block; width: 1px; height: 54px;
+  background: linear-gradient(var(--accent), transparent);
+  animation: hint 1.8s ease-in-out infinite;
+}
+@keyframes hint {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ============================================================
+   SECTIONS — shared styles + reveal-on-scroll
+   ============================================================ */
+.section { padding: 7rem 0; }
+.section--alt { background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+.eyebrow {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.4em;
+  color: var(--accent); text-align: center; margin-bottom: 0.9rem;
+}
+.title {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3.1rem); text-align: center; margin-bottom: 0.9rem;
+}
+.sub { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 3.2rem; }
+
+/* Fade-in-on-scroll animation */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about__grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+.about__photo { position: relative; max-width: 400px; margin: 0 auto; }
+.about__photo::before {  /* gold offset frame */
+  content: ''; position: absolute; inset: -14px 14px 14px -14px;
+  border: 1px solid var(--accent); border-radius: var(--radius); z-index: -1;
+}
+.about__photo img { border-radius: var(--radius); filter: saturate(0.9); }
+.about__text p { color: var(--muted); margin-bottom: 1.1rem; }
+.about__badges { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.6rem; }
+.about__badge {
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 0.4rem 1.1rem; font-size: 0.74rem;
+  text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted);
+}
+
+/* ============================================================
+   PORTFOLIO — masonry grid + filters + lightbox
+   ============================================================ */
+.filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; margin-bottom: 2.8rem; }
+.filter-btn {
+  background: transparent; border: 1px solid var(--line); color: var(--muted);
+  padding: 0.55rem 1.4rem; border-radius: 999px;
+  font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.15em;
+  transition: all 0.3s var(--ease);
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--text); }
+.filter-btn.active { background: var(--accent); border-color: var(--accent); color: #161005; }
+
+/* Masonry via CSS columns */
+.gallery { columns: 3; column-gap: 1.1rem; }
+.gallery__item {
+  break-inside: avoid; margin-bottom: 1.1rem;
+  position: relative; overflow: hidden; border-radius: var(--radius);
+  cursor: pointer;
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
+.gallery__item.filtered-out { opacity: 0; transform: scale(0.92); visibility: hidden; position: absolute; pointer-events: none; }
+.gallery__item img {
+  width: 100%; aspect-ratio: var(--ar, 4/5); object-fit: cover;
+  transition: transform 0.7s var(--ease), filter 0.7s var(--ease);
+}
+.gallery__item:hover img { transform: scale(1.06); filter: brightness(0.65); }
+.gallery__label {
+  position: absolute; left: 1.1rem; bottom: 1rem;
+  font-family: var(--serif); font-style: italic; font-size: 1.05rem;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.gallery__item:hover .gallery__label { opacity: 1; transform: translateY(0); }
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(6, 10, 14, 0.96);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: opacity 0.35s var(--ease), visibility 0.35s;
+}
+.lightbox.open { opacity: 1; visibility: visible; }
+.lightbox__img { max-width: 86vw; max-height: 82vh; object-fit: contain; border-radius: var(--radius); box-shadow: 0 24px 90px rgba(0,0,0,0.6); }
+.lightbox__caption { position: absolute; bottom: 4vh; left: 0; right: 0; text-align: center; font-family: var(--serif); font-style: italic; color: var(--muted); }
+.lightbox__close {
+  position: absolute; top: 1.3rem; right: 1.6rem;
+  background: none; border: 0; font-size: 2.4rem; color: var(--text); line-height: 1;
+  transition: color 0.3s, transform 0.3s;
+}
+.lightbox__close:hover { color: var(--accent); transform: rotate(90deg); }
+.lightbox__arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(244,246,247,0.06); border: 1px solid var(--line); color: var(--text);
+  font-size: 1.1rem; transition: all 0.3s var(--ease);
+}
+.lightbox__arrow:hover { background: var(--accent); color: #161005; border-color: var(--accent); }
+.lightbox__arrow--prev { left: 1.2rem; }
+.lightbox__arrow--next { right: 1.2rem; }
+
+/* ============================================================
+   SERVICES — offer cards
+   ============================================================ */
+.services__grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.service-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 2.4rem 1.9rem; text-align: center;
+  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.service-card:hover { transform: translateY(-6px); border-color: rgba(212,169,78,0.5); }
+.service-card__icon { font-size: 2rem; margin-bottom: 1.1rem; }
+.service-card h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; margin-bottom: 0.6rem; }
+.service-card p { color: var(--muted); font-size: 0.92rem; }
+
+/* ============================================================
+   PRICING — cards, most-popular highlight
+   ============================================================ */
+.pricing__grid { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
+.price-card {
+  position: relative; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 2.6rem 1.9rem; text-align: center;
+  display: flex; flex-direction: column;
+  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.price-card:hover { transform: translateY(-6px); border-color: rgba(212,169,78,0.5); box-shadow: 0 18px 50px rgba(0,0,0,0.4); }
+.price-card--popular {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), var(--card) 55%);
+}
+.price-card__badge {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: #161005; white-space: nowrap;
+  font-size: 0.66rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+  padding: 0.35rem 1.1rem; border-radius: 999px;
+}
+.price-card__name { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.price-card__price { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--accent); margin-bottom: 0.2rem; }
+.price-card__price small { font-size: 0.95rem; letter-spacing: 0.08em; }
+.price-card__dur { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
+.price-card__list { list-style: none; text-align: left; max-width: 260px; margin: 0 auto 1.9rem; flex: 1; }
+.price-card__list li {
+  padding: 0.55rem 0 0.55rem 1.7rem; color: var(--muted); font-size: 0.88rem;
+  border-bottom: 1px dashed var(--line); position: relative;
+}
+.price-card__list li:last-child { border-bottom: 0; }
+.price-card__list li::before { content: '\2713'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+.pricing__note { text-align: center; color: var(--muted); font-size: 0.85rem; font-style: italic; margin-top: 2.4rem; }
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.testi__grid { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
+.testi-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 2.4rem 2rem; text-align: center;
+  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.testi-card:hover { transform: translateY(-5px); border-color: rgba(212,169,78,0.4); }
+.testi-card__stars { color: var(--accent); letter-spacing: 0.25em; margin-bottom: 1.1rem; }
+.testi-card blockquote {
+  font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.65;
+  margin-bottom: 1.6rem;
+}
+.testi-card img {
+  width: 62px; height: 62px; border-radius: 50%; object-fit: cover;
+  margin: 0 auto 0.8rem; border: 2px solid var(--accent);
+}
+.testi-card strong { display: block; font-weight: 600; }
+.testi-card span { font-size: 0.76rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+/* ============================================================
+   CONTACT / BOOKING
+   ============================================================ */
+.contact__grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+.form {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 2.3rem;
+}
+.form__row { display: grid; grid-template-columns: 1fr; gap: 0 1.2rem; }
+.form__group { margin-bottom: 1.2rem; }
+.form__group label {
+  display: block; font-size: 0.72rem; text-transform: uppercase;
+  letter-spacing: 0.18em; color: var(--muted); margin-bottom: 0.45rem;
+}
+.form__group input, .form__group select, .form__group textarea {
+  width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--line);
+  border-radius: var(--radius); color: var(--text);
+  font-family: inherit; font-size: 0.92rem; padding: 0.78rem 0.95rem;
+  transition: border-color 0.3s;
+}
+.form__group input:focus, .form__group select:focus, .form__group textarea:focus {
+  outline: none; border-color: var(--accent);
+}
+.form__group.invalid input { border-color: #d06a5a; }
+.error-msg { display: none; color: #e08a7a; font-size: 0.75rem; margin-top: 0.3rem; }
+.form__group.invalid .error-msg { display: block; }
+.form__success {
+  display: none; margin-top: 1.1rem; padding: 0.95rem 1.1rem;
+  border: 1px solid rgba(212,169,78,0.5); background: var(--accent-soft);
+  border-radius: var(--radius); font-size: 0.88rem;
+}
+.form__success.show { display: block; }
+
+.contact__info { display: flex; flex-direction: column; gap: 1.7rem; }
+.contact__whatsapp {
+  display: inline-flex; align-items: center; gap: 0.7rem; align-self: flex-start;
+  background: #1f9e53; color: #fff; border-radius: 999px;
+  padding: 0.85rem 1.7rem; font-size: 0.85rem; font-weight: 500;
+  transition: background 0.3s, transform 0.3s;
+}
+.contact__whatsapp:hover { background: #27b862; transform: translateY(-2px); }
+.contact__list { list-style: none; }
+.contact__list li {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 0.75rem 0; border-bottom: 1px dashed var(--line);
+  color: var(--muted); font-size: 0.93rem;
+}
+.contact__list a:hover { color: var(--accent); }
+.contact__icon { color: var(--accent); width: 22px; text-align: center; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer { border-top: 1px solid var(--line); background: #070d13; padding: 3.2rem 0 2rem; }
+.footer__inner { display: flex; flex-direction: column; align-items: center; gap: 1.4rem; text-align: center; }
+.footer__logo { font-family: var(--serif); font-weight: 700; letter-spacing: 0.3em; font-size: 1.1rem; }
+.footer__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.6rem; }
+.footer__links a { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); transition: color 0.3s; }
+.footer__links a:hover { color: var(--accent); }
+.footer__social { display: flex; gap: 0.9rem; }
+.footer__social a {
+  width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; color: var(--muted);
+  transition: all 0.3s var(--ease);
+}
+.footer__social a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+.footer__copy { color: var(--muted); font-size: 0.78rem; }
+
+/* Back-to-top button */
+.to-top {
+  position: fixed; right: 1.4rem; bottom: 1.4rem; z-index: 150;
+  width: 46px; height: 46px; border-radius: 50%; border: 0;
+  background: var(--accent); color: #161005; font-size: 1.1rem;
+  opacity: 0; visibility: hidden; transform: translateY(14px);
+  transition: all 0.4s var(--ease); box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover { background: #e8c06a; }
+
+/* ============================================================
+   RESPONSIVE — mobile → tablet → desktop
+   ============================================================ */
+@media (min-width: 640px) {
+  .gallery { columns: 2; }
+  .services__grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing__grid { grid-template-columns: repeat(2, 1fr); }
+  .testi__grid { grid-template-columns: repeat(3, 1fr); }
+  .form__row { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 960px) {
+  .gallery { columns: 3; }
+  .about__grid { grid-template-columns: 5fr 6fr; }
+  .services__grid { grid-template-columns: repeat(4, 1fr); }
+  .pricing__grid { grid-template-columns: repeat(4, 1fr); }
+  .contact__grid { grid-template-columns: 7fr 5fr; }
+}
+
+/* Mobile nav drawer */
+@media (max-width: 820px) {
+  .nav__toggle { display: flex; }
+  .nav__links {
+    position: fixed; top: 0; right: 0;
+    height: 100vh; width: min(78vw, 320px);
+    flex-direction: column; justify-content: center; align-items: center; gap: 2.2rem;
+    background: rgba(10, 17, 24, 0.98); backdrop-filter: blur(12px);
+    border-left: 1px solid var(--line);
+    transform: translateX(100%); transition: transform 0.45s var(--ease);
+  }
+  .nav__links.open { transform: translateX(0); }
+  .nav__link { font-size: 0.95rem; }
+}
+
+/* Accessibility: honour reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- ==================== STICKY NAVBAR ==================== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#home" class="nav__logo">MR DIRECTOR</a>
+    <nav class="nav__links" id="navLinks" aria-label="Main navigation">
+      <a href="#home" class="nav__link">Home</a>
+      <a href="#about" class="nav__link">About</a>
+      <a href="#portfolio" class="nav__link">Portfolio</a>
+      <a href="#services" class="nav__link">Services</a>
+      <a href="#pricing" class="nav__link">Pricing</a>
+      <a href="#testimonials" class="nav__link">Reviews</a>
+      <a href="#contact" class="nav__link">Book Now</a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ==================== HERO ====================
+     IMG: hero slideshow photos — replace the URLs below -->
+<section class="hero" id="home">
+  <div class="hero__slide active" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80')"></div>
+  <div class="hero__slide" style="background-image:url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1920&q=80')"></div>
+  <div class="hero__slide" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1920&q=80')"></div>
+  <div class="hero__overlay"></div>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">Professional Photographer</p>
+    <h1 class="hero__title">MR DIRECTOR</h1>
+    <p class="hero__tagline">Capturing moments that last forever</p>
+    <a href="#contact" class="btn btn--gold">Book a Session</a>
+  </div>
+  <div class="hero__hint"><span></span></div>
+</section>
+
+<!-- ==================== ABOUT ====================
+     IMG: portrait placeholder below -->
+<section class="section section--alt" id="about">
+  <div class="container about__grid">
+    <div class="about__photo reveal">
+      <!-- IMG: replace with a professional portrait of Mr Director -->
+      <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80" alt="Portrait of Mr Director, professional photographer" loading="lazy">
+    </div>
+    <div class="about__text">
+      <p class="eyebrow reveal" style="text-align:left">About</p>
+      <h2 class="title reveal" style="text-align:left; margin-bottom:1.4rem">The Eye Behind the Lens</h2>
+      <p class="reveal">Mr Director is a professional photographer with 2 years of hands-on experience behind the camera. What began as a passion for storytelling through imagery has grown into a craft defined by cinematic composition, natural light, and an instinct for the decisive moment.</p>
+      <p class="reveal">His style blends elegant minimalism with rich, film-like tones — directing each scene quietly, then letting genuine emotion take over. He specializes in weddings, portrait sessions, event coverage, commercial product shoots and nature photography.</p>
+      <div class="about__badges reveal">
+        <span class="about__badge">2+ Years Experience</span>
+        <span class="about__badge">Weddings</span>
+        <span class="about__badge">Portraits</span>
+        <span class="about__badge">Events</span>
+        <span class="about__badge">Commercial</span>
+        <span class="about__badge">Nature</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PORTFOLIO ====================
+     Images are set in the GALLERY JS array (search "GALLERY") -->
+<section class="section" id="portfolio">
+  <div class="container">
+    <p class="eyebrow reveal">Selected Work</p>
+    <h2 class="title reveal">Portfolio</h2>
+    <p class="sub reveal">Every frame directed with intention.</p>
+
+    <div class="filters reveal" id="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="weddings">Weddings</button>
+      <button class="filter-btn" data-filter="portraits">Portraits</button>
+      <button class="filter-btn" data-filter="events">Events</button>
+      <button class="filter-btn" data-filter="commercial">Commercial</button>
+      <button class="filter-btn" data-filter="nature">Nature</button>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<!-- Lightbox overlay -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+  <button class="lightbox__close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lightbox__arrow lightbox__arrow--prev" id="lbPrev" aria-label="Previous">&#10094;</button>
+  <img class="lightbox__img" id="lbImg" src="" alt="">
+  <p class="lightbox__caption" id="lbCaption"></p>
+  <button class="lightbox__arrow lightbox__arrow--next" id="lbNext" aria-label="Next">&#10095;</button>
+</div>
+
+<!-- ==================== SERVICES ==================== -->
+<section class="section section--alt" id="services">
+  <div class="container">
+    <p class="eyebrow reveal">What I Offer</p>
+    <h2 class="title reveal">Services</h2>
+    <p class="sub reveal">From intimate portraits to grand celebrations — covered with a director's eye.</p>
+
+    <div class="services__grid">
+      <div class="service-card reveal">
+        <div class="service-card__icon">&#9829;</div>
+        <h3>Wedding Photography</h3>
+        <p>Full-day candid and directed coverage of your most important day, delivered as a timeless story.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-card__icon">&#9673;</div>
+        <h3>Portrait Sessions</h3>
+        <p>Studio or on-location portraits — individuals, couples, families and graduates.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-card__icon">&#9733;</div>
+        <h3>Event Coverage</h3>
+        <p>Corporate functions, birthdays, concerts and ceremonies captured discreetly and completely.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-card__icon">&#9636;</div>
+        <h3>Commercial Shoots</h3>
+        <p>Product, brand and editorial photography that makes your business look its absolute best.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRICING ====================
+     PRICE: edit the amounts (e.g. LKR 15,000) below -->
+<section class="section" id="pricing">
+  <div class="container">
+    <p class="eyebrow reveal">Pricing</p>
+    <h2 class="title reveal">Packages</h2>
+    <p class="sub reveal">Transparent pricing. No surprises.</p>
+
+    <div class="pricing__grid">
+
+      <!-- PRICE: Basic -->
+      <div class="price-card reveal">
+        <h3 class="price-card__name">Basic</h3>
+        <p class="price-card__price"><small>LKR</small> 15,000</p>
+        <p class="price-card__dur">2-hour session</p>
+        <ul class="price-card__list">
+          <li>30 edited photos</li>
+          <li>Delivery in 5 days</li>
+          <li>Online gallery</li>
+          <li>1 location</li>
+        </ul>
+        <a href="#contact" class="btn btn--ghost">Book Basic</a>
+      </div>
+
+      <!-- PRICE: Standard (Most Popular) -->
+      <div class="price-card price-card--popular reveal">
+        <span class="price-card__badge">Most Popular</span>
+        <h3 class="price-card__name">Standard</h3>
+        <p class="price-card__price"><small>LKR</small> 30,000</p>
+        <p class="price-card__dur">4-hour session</p>
+        <ul class="price-card__list">
+          <li>80 edited photos</li>
+          <li>Delivery in 3 days</li>
+          <li>Online gallery + prints</li>
+          <li>2 locations</li>
+        </ul>
+        <a href="#contact" class="btn btn--gold">Book Standard</a>
+      </div>
+
+      <!-- PRICE: Premium -->
+      <div class="price-card reveal">
+        <h3 class="price-card__name">Premium</h3>
+        <p class="price-card__price"><small>LKR</small> 60,000</p>
+        <p class="price-card__dur">Full-day session</p>
+        <ul class="price-card__list">
+          <li>200+ edited photos</li>
+          <li>Priority 48h delivery</li>
+          <li>Printed album included</li>
+          <li>Unlimited locations</li>
+        </ul>
+        <a href="#contact" class="btn btn--ghost">Book Premium</a>
+      </div>
+
+      <!-- Custom -->
+      <div class="price-card reveal">
+        <h3 class="price-card__name">Custom</h3>
+        <p class="price-card__price" style="font-size:1.35rem">Let's Talk</p>
+        <p class="price-card__dur">Tailored to you</p>
+        <ul class="price-card__list">
+          <li>Multi-day coverage</li>
+          <li>Video add-ons</li>
+          <li>Drone shots</li>
+          <li>Personal consultation</li>
+        </ul>
+        <a href="#contact" class="btn btn--ghost">Request Quote</a>
+      </div>
+    </div>
+
+    <p class="pricing__note reveal">Custom packages available on request.</p>
+  </div>
+</section>
+
+<!-- ==================== TESTIMONIALS ====================
+     IMG: replace client avatar placeholders below -->
+<section class="section section--alt" id="testimonials">
+  <div class="container">
+    <p class="eyebrow reveal">Client Reviews</p>
+    <h2 class="title reveal">Testimonials</h2>
+    <p class="sub reveal">What clients say about working with Mr Director.</p>
+
+    <div class="testi__grid">
+      <div class="testi-card reveal">
+        <div class="testi-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"He directed our wedding like a film. Every photo feels like a movie still — we relive the whole day every time we open the album."</blockquote>
+        <!-- IMG: client avatar -->
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt="Client photo of Nadeesha" loading="lazy">
+        <strong>Nadeesha Perera</strong>
+        <span>Wedding Client</span>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"Professional, punctual and incredibly talented. Our product photos doubled our online engagement. Worth every rupee."</blockquote>
+        <!-- IMG: client avatar -->
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="Client photo of Tharindu" loading="lazy">
+        <strong>Tharindu Silva</strong>
+        <span>Commercial Client</span>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>"The portrait session was so relaxed. He found light I didn't even notice, and the results are the best photos ever taken of me."</blockquote>
+        <!-- IMG: client avatar -->
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80" alt="Client photo of Sanduni" loading="lazy">
+        <strong>Sanduni Fernando</strong>
+        <span>Portrait Client</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACT / BOOKING ====================
+     EDIT: phone, email, location, WhatsApp & social links below -->
+<section class="section" id="contact">
+  <div class="container">
+    <p class="eyebrow reveal">Booking</p>
+    <h2 class="title reveal">Book Your Session</h2>
+    <p class="sub reveal">Tell me about your event — I usually reply within 24 hours.</p>
+
+    <div class="contact__grid">
+      <!-- Booking form (validated by JS at bottom) -->
+      <form class="form reveal" id="bookForm" novalidate>
+        <div class="form__row">
+          <div class="form__group">
+            <label for="fName">Name *</label>
+            <input type="text" id="fName" name="name" placeholder="Your full name">
+            <small class="error-msg"></small>
+          </div>
+          <div class="form__group">
+            <label for="fEmail">Email *</label>
+            <input type="email" id="fEmail" name="email" placeholder="you@example.com">
+            <small class="error-msg"></small>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="form__group">
+            <label for="fPhone">Phone *</label>
+            <input type="tel" id="fPhone" name="phone" placeholder="+94 7X XXX XXXX">
+            <small class="error-msg"></small>
+          </div>
+          <div class="form__group">
+            <label for="fType">Event Type</label>
+            <select id="fType" name="type">
+              <option value="">Select event type</option>
+              <option>Wedding</option>
+              <option>Portrait Session</option>
+              <option>Event Coverage</option>
+              <option>Commercial / Product</option>
+              <option>Nature / Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form__group">
+          <label for="fDate">Preferred Date</label>
+          <input type="date" id="fDate" name="date">
+        </div>
+        <div class="form__group">
+          <label for="fMsg">Message</label>
+          <textarea id="fMsg" name="message" rows="4" placeholder="Tell me about your event, location, package interest..."></textarea>
+        </div>
+        <button type="submit" class="btn btn--gold" style="width:100%">Send Booking Request</button>
+        <p class="form__success" id="formSuccess">Thank you! Your booking request has been sent. I'll get back to you within 24 hours.</p>
+      </form>
+
+      <!-- Contact details — EDIT: replace the placeholders below -->
+      <div class="contact__info reveal">
+        <!-- EDIT WhatsApp: change the number in wa.me/94771234567 -->
+        <a class="contact__whatsapp" href="https://wa.me/94771234567" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.1.2-.3.3-.4v-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.9.9-1.1 2.2-.2 3.9a11.6 11.6 0 0 0 4.5 4.2c1.7.8 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.4-.3z"/></svg>
+          Chat on WhatsApp
+        </a>
+
+        <ul class="contact__list">
+          <!-- EDIT phone -->
+          <li><span class="contact__icon">&#9742;</span><a href="tel:+94771234567">+94 77 123 4567</a></li>
+          <!-- EDIT email -->
+          <li><span class="contact__icon">&#9993;</span><a href="mailto:hello@mrdirector.lk">hello@mrdirector.lk</a></li>
+          <!-- EDIT location -->
+          <li><span class="contact__icon">&#9906;</span><span>Colombo, Sri Lanka</span></li>
+          <!-- EDIT socials -->
+          <li><span class="contact__icon">&#9673;</span><a href="https://instagram.com/mrdirector" target="_blank" rel="noopener">@mrdirector — Instagram</a></li>
+          <li><span class="contact__icon">&#10209;</span><a href="https://facebook.com/mrdirector" target="_blank" rel="noopener">Mr Director — Facebook</a></li>
+          <li><span class="contact__icon">&#9835;</span><a href="https://tiktok.com/@mrdirector" target="_blank" rel="noopener">@mrdirector — TikTok</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ====================
+     EDIT socials: update links to match your profiles -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="#home" class="footer__logo">MR DIRECTOR</a>
+    <nav class="footer__links" aria-label="Footer navigation">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Book Now</a>
+    </nav>
+    <div class="footer__social">
+      <a href="https://instagram.com/mrdirector" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+      <a href="https://facebook.com/mrdirector" target="_blank" rel="noopener" aria-label="Facebook">FB</a>
+      <a href="https://tiktok.com/@mrdirector" target="_blank" rel="noopener" aria-label="TikTok">TT</a>
+      <a href="https://wa.me/94771234567" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+    </div>
+    <p class="footer__copy">&copy; Mr Director. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button class="to-top" id="toTop" aria-label="Back to top">&#8593;</button>
+
+<script>
+'use strict';
+
+/* ============================================================
+   1. STICKY NAVBAR + MOBILE MENU + SCROLLSPY
+   ============================================================ */
+const nav = document.getElementById('nav');
+const navLinks = document.getElementById('navLinks');
+const navToggle = document.getElementById('navToggle');
+
+navToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open', open);
+  navToggle.setAttribute('aria-expanded', open);
+});
+navLinks.querySelectorAll('.nav__link').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('open');
+  });
+});
+
+// Track scroll position for navbar bg + scrollspy
+const spySections = ['home','about','portfolio','services','pricing','contact']
+  .map(id => document.getElementById(id));
+const toTop = document.getElementById('toTop');
+
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  toTop.classList.toggle('show', window.scrollY > window.innerHeight * 0.8);
+
+  // Highlight the nav link of the section currently in view
+  const pos = window.scrollY + window.innerHeight * 0.35;
+  let current = 'home';
+  spySections.forEach(s => { if (s && s.offsetTop <= pos) current = s.id; });
+  navLinks.querySelectorAll('.nav__link').forEach(l =>
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+}, { passive: true });
+
+toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ============================================================
+   2. HERO SLIDESHOW — crossfading backgrounds every 6s
+   ============================================================ */
+const slides = document.querySelectorAll('.hero__slide');
+let slideIdx = 0;
+setInterval(() => {
+  slides[slideIdx].classList.remove('active');
+  slideIdx = (slideIdx + 1) % slides.length;
+  slides[slideIdx].classList.add('active');
+}, 6000);
+
+/* ============================================================
+   3. REVEAL-ON-SCROLL (IntersectionObserver fade-in)
+   ============================================================ */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ============================================================
+   4. PORTFOLIO GALLERY
+   GALLERY: replace the src URLs with your own photos.
+   cat must match a filter: weddings, portraits, events,
+   commercial, nature. ar = aspect ratio for masonry.
+   ============================================================ */
+const GALLERY = [
+  { cat:'weddings',  label:'Elena & Marco',     ar:'3/4',   src:'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80' },
+  { cat:'portraits', label:'Studio Portrait',   ar:'4/5',   src:'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80' },
+  { cat:'events',    label:'Gala Night',        ar:'16/10', src:'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80' },
+  { cat:'commercial',label:'Product Editorial', ar:'4/5',   src:'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80' },
+  { cat:'nature',    label:'Misty Highlands',   ar:'16/10', src:'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80' },
+  { cat:'weddings',  label:'First Dance',       ar:'16/10', src:'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80' },
+  { cat:'portraits', label:'Golden Hour',       ar:'3/4',   src:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80' },
+  { cat:'events',    label:'Festival Stage',    ar:'4/5',   src:'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80' },
+  { cat:'commercial',label:'Watch Campaign',    ar:'16/10', src:'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=800&q=80' },
+  { cat:'nature',    label:'Ocean Cliffs',      ar:'4/5',   src:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80' },
+  { cat:'weddings',  label:'The Bouquet',       ar:'4/5',   src:'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80' },
+  { cat:'nature',    label:'Forest Light',      ar:'16/10', src:'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80' },
+];
+
+const gallery = document.getElementById('gallery');
+GALLERY.forEach((item, i) => {
+  const fig = document.createElement('figure');
+  fig.className = 'gallery__item';
+  fig.dataset.cat = item.cat;
+  fig.dataset.index = i;
+  fig.style.setProperty('--ar', item.ar);
+  fig.setAttribute('role','button');
+  fig.setAttribute('tabindex','0');
+  fig.setAttribute('aria-label', 'View photo: ' + item.label);
+  fig.innerHTML = `
+    <img src="${item.src}" alt="${item.label} — ${item.cat} photography by Mr Director" loading="lazy" decoding="async">
+    <figcaption class="gallery__label">${item.label}</figcaption>`;
+  gallery.appendChild(fig);
+});
+
+/* Filter buttons */
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('.gallery__item').forEach(item => {
+    item.classList.toggle('filtered-out', !(filter === 'all' || item.dataset.cat === filter));
+  });
+});
+
+/* ============================================================
+   5. LIGHTBOX — arrows, keyboard, backdrop click, swipe
+   ============================================================ */
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCaption = document.getElementById('lbCaption');
+let lbList = [], lbIndex = 0;
+
+function openLightbox(itemEl) {
+  lbList = [...document.querySelectorAll('.gallery__item:not(.filtered-out)')];
+  lbIndex = lbList.indexOf(itemEl);
+  showLb();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function showLb() {
+  const item = GALLERY[lbList[lbIndex].dataset.index];
+  lbImg.src = item.src.replace('w=800', 'w=1600'); // higher res in viewer
+  lbImg.alt = item.label + ' — ' + item.cat + ' photography by Mr Director';
+  lbCaption.textContent = item.label;
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function stepLb(dir) {
+  lbIndex = (lbIndex + dir + lbList.length) % lbList.length;
+  showLb();
+}
+
+gallery.addEventListener('click', e => {
+  const item = e.target.closest('.gallery__item');
+  if (item) openLightbox(item);
+});
+gallery.addEventListener('keydown', e => {
+  const item = e.target.closest('.gallery__item');
+  if (item && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openLightbox(item); }
+});
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => stepLb(-1));
+document.getElementById('lbNext').addEventListener('click', () => stepLb(1));
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') stepLb(-1);
+  if (e.key === 'ArrowRight') stepLb(1);
+});
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+// Swipe support on touch devices
+let touchX = 0;
+lightbox.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+lightbox.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) stepLb(dx < 0 ? 1 : -1);
+}, { passive: true });
+
+/* ============================================================
+   6. BOOKING FORM — validation + success message
+   (No backend: connect submit to your email service / API)
+   ============================================================ */
+const form = document.getElementById('bookForm');
+
+function setError(input, msg) {
+  const group = input.closest('.form__group');
+  group.classList.toggle('invalid', !!msg);
+  group.querySelector('.error-msg').textContent = msg || '';
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  let valid = true;
+
+  if (form.name.value.trim().length < 2) { setError(form.name, 'Please enter your name.'); valid = false; }
+  else setError(form.name, '');
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.value.trim())) { setError(form.email, 'Please enter a valid email.'); valid = false; }
+  else setError(form.email, '');
+
+  const digits = form.phone.value.replace(/[\s\-()+]/g, '');
+  if (!/^\d{7,15}$/.test(digits)) { setError(form.phone, 'Please enter a valid phone number.'); valid = false; }
+  else setError(form.phone, '');
+
+  if (!valid) return;
+
+  document.getElementById('formSuccess').classList.add('show');
+  form.reset();
+  setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 6000);
+});
+
+['name','email','phone'].forEach(id =>
+  form[id].addEventListener('input', () => setError(form[id], '')));
+</script>
+</body>
+</html>
